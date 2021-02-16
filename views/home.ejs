@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/stylesheets/home.css">
+    <link rel="stylesheet" href="/stylesheets/home2.css">
+</head>
+<body>
+    <section class="mainSection">
+        <div class="circle"></div>
+        <header>
+            <form class="form d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-info" type="submit">Search</button>
+            </form>
+            <div class="toggle" onclick="toggleMenu()"></div>
+            <ul class="navigation">
+                <li><a href="#">HOME</a></li>
+                <li><a href="/products">ALL DEALS</a></li>
+                <li><a href="#">CONTACT</a></li>
+                <li><a href="#">LOGIN</a></li>
+                <li><a href="#">REGISTER</a></li>
+            </ul>
+        </header>
+        <div class="content">
+            <div class="textBox">
+                <h2>What's Coming Up !!</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia non asperiores odio quis quia eius molestias autem nihil corrupti, suscipit, facere sapiente illum veniam, voluptatem dicta? Maxime hic ratione voluptates possimus quis blanditiis, reiciendis id ipsa minus, aliquam cum consequuntur eos velit iste quam ipsam laborum, qui minima odit quod.</p>
+                <a href="#">Learn More</a>
+            </div>
+            <div class="imgBox">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide"><img src="/images/tart.jfif"></div>
+                      <div class="swiper-slide"><img src="/images/cake2.jfif"></div>
+                      <div class="swiper-slide"><img src="/images/donut.jfif"></div>
+                      <div class="swiper-slide"><img src="/images/cupcake.jfif"></div>
+                      <div class="swiper-slide"><img src="/images/cupcake2.jfif"></div>
+                      <div class="swiper-slide"><img src="/images/icecream.jfif"></div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <ul class="sci">
+            <li><a href="#"><img src="/images/instagram.png"></a></li>
+            <li><a href="#"><img src="/images/twitter.png"></a></li>
+            <li><a href="#"><img src="/images/facebook.png"></a></li>
+        </ul>
+    </section>
+
+    <section class="secondary">
+        <section id="first" class="container-fluid px-0">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="row justify-content-center">
+                        <div class="col-10 col-lg-8 mb-5 mb-md-0">
+                            <h2>CONTENT</h2>
+                            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque voluptatum aut, enim harum blanditiis eum ea sequi iure! Rem iusto cupiditate labore eius delectus similique voluptas, quaerat asperiores quis commodi?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img class="img-fluid" src="/images/bird.jfif">
+                </div>
+            </div>
+        </section>
+        <section id="second" class="container-fluid px-0">
+            <div class="row align-items-center">
+                <div class="col-md-6 order-2 order-md-1">
+                    <img src="/images/bird.jfif" class="img-fluid">
+                </div>
+                <div class="col-md-6 text-center order-1 order-md-2">
+                    <div class="row justify-content-center">
+                        <div class="col-10 col-lg-8 mb-5 mb-md-0">
+                            <h2>CONTENT</h2>
+                            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque voluptatum aut, enim harum blanditiis eum ea sequi iure! Rem iusto cupiditate labore eius delectus similique voluptas, quaerat asperiores quis commodi?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: 0,
+        stretch: 0,
+        depth: 200,
+        modifier: 1,
+        slideShadows: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      loop: true,
+    });
+
+    function toggleMenu() {
+        const menuToggle = document.querySelector('.toggle');
+        const navigation = document.querySelector('.navigation');
+        menuToggle.classList.toggle('active');
+        navigation.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
