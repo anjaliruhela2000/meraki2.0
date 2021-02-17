@@ -14,12 +14,12 @@
         <input type="number" id="price" name="price" placeholder="price" value="<%= product.price %> ">
         <label for="category">Select Category</label>
         <select name="category" id="category">
-            <option value="fruit">fruit</option>
-            <option value="vegetable">vegetable</option>
-            <option value="dairy">dairy</option>
-            <option value="clothing">clothing</option>
-            <option value="bakery">bakery</option>
-            <option value="miscellaneous">miscellaneous</option>
+            <option value="fruit" <%= product.category === 'fruit' ? 'selected' : '' %>>fruit</option>
+            <option value="vegetable" <%= product.category === 'vegetable' ? 'selected' : '' %>>vegetable</option>
+            <option value="dairy" <%= product.category === 'dairy' ? 'selected' : '' %>>dairy</option>
+            <option value="clothing" <%= product.category === 'clothing' ? 'selected' : '' %>>clothing</option>
+            <option value="bakery" <%= product.category === 'bakery' ? 'selected' : '' %>>bakery</option>
+            <option value="miscellaneous" <%= product.category === 'miscellaneous' ? 'selected' : '' %>>miscellaneous</option>
         </select>
         <label for="description">Description</label>
         <textarea name="description" id="description" cols="30" rows="10"></textarea>

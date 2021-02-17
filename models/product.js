@@ -13,6 +13,10 @@ const ProductSchema = new Schema({
         lowercase: true,
         required: true,
     },
+    image: {
+        type: String,
+        required: true
+    },
     price: {
         type: String,
         required: true,

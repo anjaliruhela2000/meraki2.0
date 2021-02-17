@@ -1,18 +1,11 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const Buyer = require('../models/buyer');
 
-const BuyerAuth = async(req, res, next) => {
-    try {
-        const Authtoken = req.header("Authorization").replace("Bearer", "").trim()
-        const decoded = jwt.verify(Authtoken, "buyer_password")
-        const buyer = await Buyer.findOne({_id: decoded._id, 'tokens.token': Authtoken})
-        req.buyer = buyer
-        req.token = Authtoken
-        next()
-    } catch(error) {
-        res.status(401).send({error: "Unable to authorise"})
+module.exports.isLoggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        req.session.returnTo = req.originalUrl
+        req.flash('error', 'You must be signed in first!');
+        return res.redirect('/login');
     }
+    next();
 }
-
-module.exports = BuyerAuth

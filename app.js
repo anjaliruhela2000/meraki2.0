@@ -1,15 +1,25 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Product = require('./models/product');
+const Buyer = require('./models/buyer');
 const path = require('path');
-const SellerRoute = require('./routes/seller');
-const BuyerRoute = require('./routes/buyer');
+const SellerRoutes = require('./routes/seller');
+const BuyerRoutes = require('./routes/buyer');
+const ProductRoutes = require('./routes/product');
 const methodOverride = require('method-override');
+const catchAsync = require('./utils/catchAsync');
+const ExpressError = require('./utils/ExpressError');
+const Joi = require('joi');
+const flash = require('connect-flash');
+const {productSchema} = require('./schemas.js');
+const passport = require('passport');
+const localStrategy = require('passport-local');
 
 mongoose.connect('mongodb://localhost:27017/meraki', {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 });
 
 const db = mongoose.connection;
@@ -20,53 +30,45 @@ db.once("open", () => {
 
 const app = express();
 
-const ExpressError = require('./utils/ExpressError');
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.json())
-app.use(SellerRoute)
-app.use(BuyerRoute);
+app.use(SellerRoutes)
+app.use(BuyerRoutes);
+app.use(ProductRoutes);
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
+
+const sessionConfig = {
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}
+app.use(session(sessionConfig));
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(Buyer.authenticate()));
+
+passport.serializeUser(Buyer.serializeUser());
+passport.deserializeUser(Buyer.deserializeUser());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success')
+    res.locals.error = req.flash('error')
+    next();
+})
 
 app.get('/', (req, res) => {
     res.render('home');
-})
-
-app.get('/products', async(req, res) => {
-    const products = await Product.find({});
-    res.render('products/index', {products})
-})
-
-app.get('/products/new', (req, res) => {
-    res.render('products/new')
-})
-
-app.post('/products', async (req,res) => {
-    const newProduct = new Product(req.body)
-    await newProduct.save()
-    res.redirect(`products/${newProduct._id}`)
-})
-
-app.get('/products/:id', async(req, res) => {
-    const {id} = req.params;
-    const product = await Product.findById(id);
-    res.render('/products/show', {product})
-})
-
-app.get('/products/:id/edit', async (req,res) => {
-    const {id} = req.params.id;
-    const product = await Product.findById(id);
-    res.render('products/edit', {product})
-})
-
-app.put('/products/:id', async(req, res) => {
-    const {id} = req.params;
-    const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true, new: true})
-    res.redirect(`/products/${product._id}`)
 })
 
 app.all('*', (req, res, next) => {
